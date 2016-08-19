@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="src/app.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <meta charset="UTF-8">
+    <title>Scrumboard</title>
+</head>
+
+<body ng-app="myApp" ng-controller="scrumboard">
+    <div class="container header">
+        <div>
+            <button class="btn headerButton" ng-click="create()" ng-disabled="shouldBlock()">Create Story</button>
+            <button class="btn headerButton" ng-click="undo()" ng-disabled="shouldBlock()">Undo</button>
+        </div>
+        <div>To Do</div>
+        <div>In progress</div>
+        <div>Done
+            <button class="btn headerButton" ng-click="sprintEnd()" ng-disabled="shouldBlock()">End Sprint</button>
+        </div>
+    </div>
+    <div class="container">
+        <ul ng-repeat="status in statuses">
+            <li ng-repeat="story in filterByStatus(status)">
+                <div ng-if="story.isNew || story.editing">
+                    <form ng-submit="add(story)" ng-model-options="{updateOn:'submit'}">
+                        <span>
+                            <select ng-model="story.projectId" required title="projectId">
+                                <option selected value>no project</option>
+                                <option ng-repeat="project in projects" value="{{project.id}}">{{project.name}}</option>
+                            </select>
+
+                            <select ng-model="story.storyPoints" required title="story Points">
+                                <option selected value>no</option>
+                                <option ng-repeat="storyPoint in storyPoints">{{storyPoint}}</option>
+                            </select>
+
+                            <span class="btnOnItem">
+                                <button class="btn btnSave" type="submit">Save</button>
+                                <button class="btn btnCancel" ng-click="cancel(story)">Cancel</button>
+                            </span>
+                        </span>
+
+                        <textarea class="storyTitle" ng-model="story.title" placeholder="title" required></textarea>
+                        <textarea class="textArea" ng-model="story.description" placeholder="story" required></textarea>
+                        <input class="editAsanaUrl"
+                               placeholder="https://app.asana.com/"
+                               ng-model="story.asanaLink"
+                               type="Url"
+                               pattern="https://app.asana.com/.+">
+                    </form>
+                </div>
+                <div ng-if="!story.isNew && !story.editing">
+                    <span class="projectName">{{projectName(story)}} [{{story.storyPoints}}]</span>
+                    <div class="btnOnItem">
+                        <button class="btn btn-danger" ng-click="remove(story)" ng-disabled="shouldBlock()">Delete</button>
+                        <button class="btn editButton" ng-if="story.status === 'Story'" ng-click="edit(story)" ng-disabled="shouldBlock()">Edit</button>
+                    </div>
+                    <p class="storyTitleNotEdit">{{story.title}}</p>
+                    <span ng-click="updateStatus(story)">
+                        <select ng-model="story.status" ng-disabled="shouldBlock()" >
+                            <option ng-repeat="status in allowedStatuses(story)">{{status}}</option>
+                        </select>
+                    </span>
+                    <p class="description">{{story.description}}</p>
+                    <div class="footer">
+                        <a target="randomVar" ng-href={{story.asanaLink}}>Go to Asana</a>
+                        <span ng-model="story" ng-if="story.status != 'To Do' && story.assignee">Assignee: {{story.assignee}}</span>
+                        <select ng-if="story.status === 'To Do'" ng-model="story.assignee" ng-disabled="shouldBlock()">
+                            <option selected value >no assignee</option>
+                            <option ng-repeat="initial in initials">{{initial}}</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>

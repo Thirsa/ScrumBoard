@@ -1,0 +1,114 @@
+* {
+    padding:0;
+    margin:0;
+}
+
+body, html, .container{
+    height: 100%;
+}
+
+.header{
+    height: 50px;
+}
+
+.container {
+    display: flex;
+}
+
+.header div {
+    height: 50px;
+    text-align: center;
+    flex: 1;
+    line-height: 50px;
+    margin: 2px;
+    background-color: #d7ffe1;
+}
+
+.headerButton {
+    height: 100%;
+    line-height: 50px;
+    background-color: #f2f2ef;
+}
+
+.container ul {
+    flex: 1;
+    background-color: #fbfbf9;
+    height: 100%;
+    margin: 2px;
+}
+
+ul, li {
+    /*height: 250px;*/
+    list-style-type: none;
+    margin-top: 8px;
+    background-color: #FCF0AD;
+    padding: 4px;
+    border-radius: 10px;
+}
+
+.description, .textArea{
+    height:130px;
+    width:100%;
+    overflow-y: auto;
+    background-color: lightyellow;
+    margin:0;
+}
+
+.btn {
+    border-radius: 5px;
+    padding: 4px;
+    margin: 0.3em;
+    border: 0;
+}
+
+.btn:hover{
+    cursor: pointer;
+}
+
+.editButton {
+    float:right;
+}
+
+.projectName {
+    margin-top: 0;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.storyTitle, .storyTitleNotEdit{
+    font-size: 15px;
+    height:50px;
+    overflow-y: auto;
+    width:100%;
+}
+
+.storyTitleNotEdit {
+    font-weight: bold;
+}
+
+.editAsanaUrl {
+    width:100%;
+}
+
+.btnOnItem {
+    float: right;
+}
+
+.btnSave {
+    background-color: #5cb85c;
+    color:white;
+}
+
+.btnCancel {
+    background-color: #d9534f;
+    color: white;
+    border-radius: 5px;
+}
+.a:hover {
+    cursor: pointer;
+}
+
+.footer {
+    margin-top: 3px;
+}
+
