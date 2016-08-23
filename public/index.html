@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-    <script src="src/app.js"></script>
+    <script src="./src/app.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
     <link rel="stylesheet" type="text/css" href="./css/index.css">
     <meta charset="UTF-8">
@@ -12,7 +12,7 @@
 <body ng-app="myApp" ng-controller="scrumboard">
     <div class="container header">
         <div>
-            <button class="btn headerButton" ng-click="create()" ng-disabled="shouldBlock()">Create Story</button>
+            <button class="btn headerButton" ng-click="createStory()" ng-disabled="shouldBlock()">Create Story</button>
             <button class="btn headerButton" ng-click="undo()" ng-disabled="shouldBlock()">Undo</button>
         </div>
         <div>To Do</div>
@@ -25,7 +25,7 @@
         <ul ng-repeat="status in statuses">
             <li ng-repeat="story in filterByStatus(status)">
                 <div ng-if="story.isNew || story.editing">
-                    <form ng-submit="add(story)" ng-model-options="{updateOn:'submit'}">
+                    <form ng-submit="addStory(story)" ng-model-options="{updateOn:'submit'}">
                         <span>
                             <select ng-model="story.projectId" required title="projectId">
                                 <option selected value>no project</option>
@@ -47,16 +47,14 @@
                         <textarea class="textArea" ng-model="story.description" placeholder="story" required></textarea>
                         <input class="editAsanaUrl"
                                placeholder="https://app.asana.com/"
-                               ng-model="story.asanaLink"
-                               type="Url"
-                               pattern="https://app.asana.com/.+">
+                               ng-model="story.asanaLink">
                     </form>
                 </div>
                 <div ng-if="!story.isNew && !story.editing">
                     <span class="projectName">{{projectName(story)}} [{{story.storyPoints}}]</span>
                     <div class="btnOnItem">
-                        <button class="btn btn-danger" ng-click="remove(story)" ng-disabled="shouldBlock()">Delete</button>
-                        <button class="btn editButton" ng-if="story.status === 'Story'" ng-click="edit(story)" ng-disabled="shouldBlock()">Edit</button>
+                        <button class="btn btn-danger" ng-click="removeStory(story)" ng-disabled="shouldBlock()">Delete</button>
+                        <button class="btn editButton" ng-if="story.status === 'Story'" ng-click="editStory(story)" ng-disabled="shouldBlock()">Edit</button>
                     </div>
                     <p class="storyTitleNotEdit">{{story.title}}</p>
                     <span ng-click="updateStatus(story)">

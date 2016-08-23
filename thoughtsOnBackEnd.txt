@@ -1,0 +1,16 @@
+CRUD
+
+Tables:
+    items
+    assignees?
+    allowed statuses?
+    projects?
+    initials?
+
+memory stays in $scope?
+
+get all stories
+create a story
+delete one story
+delete all stories
+update a story
