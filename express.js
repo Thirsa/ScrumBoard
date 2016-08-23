@@ -32,7 +32,7 @@ app.get('/settings', function(req, res){
 });
 
 app.post('/stories', function(req, res){
-    repository.create(req.body);
+    stories.create(req.body);
     res.status(201).send('yay');
 });
 

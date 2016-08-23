@@ -11,7 +11,7 @@ angular.module('myApp', [])
 
     $scope.stories = [];
     $scope.allStories = function (){
-        $http.get("./stories")
+        $http.get("/stories")
         .then(function(response) {
             $scope.stories = response.data;
         }, function(error) {
@@ -22,7 +22,7 @@ angular.module('myApp', [])
     $scope.allStories();
 
     $scope.projects = [];
-    $http.get("./projects")
+    $http.get("/projects")
     .then(function(response){
         $scope.projects = response.data;
     },function(error){
@@ -33,7 +33,7 @@ angular.module('myApp', [])
     $scope.storyPoints = [];
     $scope.statuses = [];
     $scope.initials = [];
-    $http.get('./settings')
+    $http.get('/settings')
     .then(function(response){
         $scope.storyPoints = response.data.storyPoints;
         $scope.statuses = response.data.statuses;
@@ -81,7 +81,7 @@ angular.module('myApp', [])
 
     $scope.shouldBlock = function (){
         return $scope.stories.filter(function(story){
-                return story.editing === true || story.isNew === true;
+            return story.editing === true || story.isNew === true;
         }).length > 0;
     };
 
@@ -118,6 +118,7 @@ angular.module('myApp', [])
             $scope.allStories();
         }, function (error){
             console.log('oef');
+            throw error;
         });
     };
 
